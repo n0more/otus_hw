@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"hw02_fix_app/printer"
-	"hw02_fix_app/reader"
-	"hw02_fix_app/types"
+	"github.com/n0more/otus_hw/hw02_fix_app/printer"
+	"github.com/n0more/otus_hw/hw02_fix_app/reader"
+	"github.com/n0more/otus_hw/hw02_fix_app/types"
 )
 
 func main() {
