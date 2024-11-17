@@ -69,7 +69,6 @@ type Filter struct {
 	field int
 }
 
-
 func NewCompare(field int) *Filter {
 	return &Filter{field: field}
 }
