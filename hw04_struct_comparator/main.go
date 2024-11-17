@@ -65,8 +65,17 @@ const (
 	Rate int = iota
 )
 
-func Compare(b1, b2 Book, filter int) bool {
-	switch filter {
+type Filter struct {
+	field int
+}
+
+
+func NewCompare(field int) *Filter {
+	return &Filter{field: field}
+}
+
+func (f *Filter) Compare(b1, b2 Book) bool {
+	switch f.field {
 	case Year:
 		return b1.year > b2.year
 	case Size:
@@ -91,11 +100,14 @@ func main() {
 	bookSecond.SetID(2)
 	bookSecond.SetAuthor("Author unknown")
 	bookSecond.SetTitle("Умная Книга")
-	bookSecond.SetRate(1.3)
+	bookSecond.SetRate(1.7)
 	bookSecond.SetSize(100)
-	bookSecond.SetYear(2956)
+	bookSecond.SetYear(956)
 
-	fmt.Println(Compare(bookFirst, bookSecond, Year))
-	fmt.Println(Compare(bookFirst, bookSecond, Size))
-	fmt.Println(Compare(bookFirst, bookSecond, Rate))
+	YearCompare := NewCompare(Year)
+	fmt.Println(YearCompare.Compare(bookFirst, bookSecond))
+	RateCompare := NewCompare(Rate)
+	fmt.Println(RateCompare.Compare(bookFirst, bookSecond))
+	SizeCompare := NewCompare(Size)
+	fmt.Println(SizeCompare.Compare(bookFirst, bookSecond))
 }
