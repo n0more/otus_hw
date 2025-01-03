@@ -5,8 +5,7 @@ import (
 	"sort"
 )
 
-func binarySearch(v []int, s int) bool {
-	sort.Ints(v)
+func binarySearch(v []int, s int) int {
 	low := 0
 	high := len(v) - 1
 
@@ -14,7 +13,7 @@ func binarySearch(v []int, s int) bool {
 		mid := (low + high) / 2
 		switch {
 		case v[mid] == s:
-			return true
+			return mid
 		case v[mid] < s:
 			low = mid + 1
 		default:
@@ -22,14 +21,14 @@ func binarySearch(v []int, s int) bool {
 		}
 	}
 
-	return false
+	return -1
 }
 
 func main() {
 	s := 15
 	v := []int{5, 90, 11, 34, 2, 3, 10}
-
-	if binarySearch(v, s) {
+	sort.Ints(v)
+	if binarySearch(v, s) >= 0 {
 		fmt.Printf("%d найден в cрезе\n", s)
 	} else {
 		fmt.Printf("%d не найден в cрезе\n", s)
