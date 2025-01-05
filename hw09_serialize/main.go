@@ -15,8 +15,7 @@ func tryJSON(book format.Book) {
 	fmt.Println("JSON:", string(jsonData))
 
 	jsonBook := format.Book{}
-	err = jsonBook.UnmarshalJSON(jsonData)
-	if err != nil {
+	if unmarshalErr := jsonBook.UnmarshalJSON(jsonData); unmarshalErr != nil {
 		fmt.Println("Error unmarshaling from JSON:", err)
 		return
 	}
@@ -39,9 +38,8 @@ func tryXML(book format.Book) {
 	fmt.Println("XML:", string(xmlData))
 
 	xmlBook := format.Book{}
-	err = xmlBook.ReadXML(xmlData)
-	if err != nil {
-		fmt.Println("Error unmarshaling from XML:", err)
+	if readErr := xmlBook.ReadXML(xmlData); readErr != nil {
+		fmt.Println("Error unmarshaling from XML:", readErr)
 		return
 	}
 	fmt.Println("Book:", xmlBook)
@@ -63,8 +61,7 @@ func tryYAML(book format.Book) {
 	fmt.Println("YAML:", string(yamlData))
 
 	yamlBook := format.Book{}
-	err = yamlBook.UnmarshalYAML(yamlData)
-	if err != nil {
+	if unmarshalErr := yamlBook.UnmarshalYAML(yamlData); unmarshalErr != nil {
 		fmt.Println("Error unmarshaling from YAML:", err)
 		return
 	}
@@ -87,8 +84,7 @@ func tryGOB(book format.Book) {
 	fmt.Println("GOB:", gobData)
 
 	gobBook := format.Book{}
-	err = gobBook.DecodeGob(gobData)
-	if err != nil {
+	if decodeErr := gobBook.DecodeGob(gobData); decodeErr != nil {
 		fmt.Println("Error unmarshaling from GOB:", err)
 		return
 	}
@@ -111,8 +107,7 @@ func tryMSGPACK(book format.Book) {
 	fmt.Println("MSGPACK:", bjsonData)
 
 	bjsonBook := format.Book{}
-	err = bjsonBook.UnmarshalMsgpack(bjsonData)
-	if err != nil {
+	if unmarshalErr := bjsonBook.UnmarshalMsgpack(bjsonData); unmarshalErr != nil {
 		fmt.Println("Error unmarshaling from MSGPACK:", err)
 		return
 	}
