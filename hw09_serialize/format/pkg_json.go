@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 )
 
-
 func (b Book) MarshalJSON() ([]byte, error) {
 	type Alias Book
 	return json.Marshal(&struct {
