@@ -142,5 +142,5 @@ func main() {
 	tryXML(book)
 	tryYAML(book)
 	tryGOB(book)
-	MSGPACK(book)
+	tryMSGPACK(book)
 }
