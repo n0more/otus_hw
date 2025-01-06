@@ -18,7 +18,8 @@ func (b *Book) UnmarshalYAML(data []byte) error {
 	aux := &struct {
 		Alias
 	}{Alias: (Alias)(*b)}
-	if err := yaml.Unmarshal(data, aux); err != nil {
+	err := yaml.Unmarshal(data, aux)
+	if err != nil {
 		return err
 	}
 

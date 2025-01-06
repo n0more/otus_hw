@@ -18,7 +18,8 @@ func (b *Book) UnmarshalMsgpack(data []byte) error {
 	aux := &struct {
 		Alias
 	}{Alias: (Alias)(*b)}
-	if err := msgpack.Unmarshal(data, aux); err != nil {
+	err := msgpack.Unmarshal(data, aux)
+	if err != nil {
 		return err
 	}
 

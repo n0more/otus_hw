@@ -18,7 +18,8 @@ func (b *Book) UnmarshalJSON(data []byte) error {
 	aux := &struct {
 		Alias
 	}{Alias: (Alias)(*b)}
-	if err := json.Unmarshal(data, aux); err != nil {
+	err := json.Unmarshal(data, aux)
+	if err != nil {
 		return err
 	}
 

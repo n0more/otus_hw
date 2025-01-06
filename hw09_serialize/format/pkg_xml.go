@@ -13,7 +13,8 @@ func (b *Book) ReadXML(data []byte) error {
 	aux := &struct {
 		Alias
 	}{Alias: (Alias)(*b)}
-	if err := xml.Unmarshal(data, aux); err != nil {
+	err := xml.Unmarshal(data, aux)
+	if err != nil {
 		return err
 	}
 
