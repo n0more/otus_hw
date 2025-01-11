@@ -21,16 +21,15 @@ func Generator(duration time.Duration, min int, max int) chan int {
 	go func() {
 		timer := time.NewTimer(duration)
 		for {
+			readInt := randomInt(min, max)
 			select {
 			case <-timer.C:
 				fmt.Println("Generator stopped")
 				close(c)
 				return
-			default:
-				readInt := randomInt(min, max)
-				time.Sleep(time.Duration(readInt*10) * time.Millisecond)
-				c <- readInt
+			case c <- readInt:
 				fmt.Printf("Generator sent: %d\n", readInt)
+				time.Sleep(time.Duration(readInt*10) * time.Millisecond)
 			}
 		}
 	}()
@@ -63,7 +62,7 @@ func main() {
 	duration := 1 * time.Minute
 	d := 10
 
-	generator := Generator(duration, 20, 200)
+	generator := Generator(duration, 1, 50)
 
 	accumulator := Accumulator(generator, d)
 
