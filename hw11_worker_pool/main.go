@@ -14,9 +14,8 @@ func CounterIncreaser(rutines int, counter *int) {
 
 		go func() {
 			defer wg.Done()
-			defer mu.Unlock()
-
 			mu.Lock()
+			defer mu.Unlock()
 
 			*counter++
 			fmt.Printf("add counter: %d\n", *counter)
