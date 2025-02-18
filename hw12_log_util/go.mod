@@ -1,3 +1,3 @@
-module github.com/fixme_my_friend/hw12_log_util
+module github.com/n0more/otus_hw/hw12_log_util
 
 go 1.20
