@@ -14,6 +14,7 @@ func TestHandlerGET(t *testing.T) {
 	handler(w, req)
 
 	resp := w.Result()
+	defer resp.Body.Close()
 	body, _ := io.ReadAll(resp.Body)
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status OK, got %v", resp.StatusCode)
@@ -30,6 +31,7 @@ func TestHandlerPOST(t *testing.T) {
 	handler(w, req)
 
 	resp := w.Result()
+	defer resp.Body.Close()
 	body, _ := io.ReadAll(resp.Body)
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status OK, got %v", resp.StatusCode)
