@@ -40,3 +40,30 @@ func TestHandlerPOST(t *testing.T) {
 		t.Errorf("Unexpected response body: %q", string(body))
 	}
 }
+
+func TestSendRequestGET(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(handler))
+	defer ts.Close()
+
+	body, err := sendRequest(http.MethodGet, ts.URL, nil)
+	if err != nil {
+		t.Fatalf("Request failed: %v", err)
+	}
+	if body != "Response from server" {
+		t.Errorf("Unexpected response body: %q", body)
+	}
+}
+
+func TestSendRequestPOST(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(handler))
+	defer ts.Close()
+
+	requestBody := []byte("test data")
+	body, err := sendRequest(http.MethodPost, ts.URL, requestBody)
+	if err != nil {
+		t.Fatalf("Request failed: %v", err)
+	}
+	if body != "Response from server" {
+		t.Errorf("Unexpected response body: %q", body)
+	}
+}

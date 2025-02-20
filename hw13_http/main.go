@@ -37,48 +37,61 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Response from server"))
 }
 
+func sendRequest(method, url string, data []byte) (string, error) {
+	var req *http.Request
+	var err error
+
+	switch method {
+	case http.MethodPost:
+		req, err = http.NewRequest(http.MethodPost, url, bytes.NewBuffer(data))
+	case http.MethodGet:
+		req, err = http.NewRequest(http.MethodGet, url, nil)
+	default:
+		return "", fmt.Errorf("invalid method: %s", method)
+	}
+
+	if err != nil {
+		return "", err
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	return string(body), nil
+}
+
 func main() {
 	mode, aArg := parseArguments()
 
 	switch mode {
 	case "client":
 		if len(aArg) < 2 {
-			fmt.Println("Usage: -m client <fullURL> <method> [data]")
+			fmt.Println("Usage: --mode client <fullURL> <method> [data]")
 			return
 		}
 
 		fullURL := aArg[0]
 		method := aArg[1]
-
-		var req *http.Request
-		var err error
-
+		var data []byte
 		if method == http.MethodPost && len(aArg) > 2 {
-			data := []byte(aArg[2])
-			req, err = http.NewRequest(http.MethodPost, fullURL, bytes.NewBuffer(data))
-		} else {
-			req, err = http.NewRequest(http.MethodGet, fullURL, nil)
+			data = []byte(aArg[2])
 		}
 
-		if err != nil {
-			log.Println("Error creating request:", err)
-			return
-		}
-
-		client := &http.Client{}
-		resp, err := client.Do(req)
+		response, err := sendRequest(method, fullURL, data)
 		if err != nil {
 			log.Println("Error sending request:", err)
 			return
 		}
-		defer resp.Body.Close()
-
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			log.Println("Error reading response:", err)
-			return
-		}
-		fmt.Println("Response:", string(body))
+		fmt.Println("Response:", response)
 	case "server":
 		if len(aArg) != 2 {
 			fmt.Println("Usage: -m server <address> <port>")
