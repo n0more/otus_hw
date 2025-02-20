@@ -8,6 +8,8 @@ import (
 	"testing"
 )
 
+const responseMessage = "Response from server"
+
 func TestHandlerGET(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "http://localhost/", nil)
 	w := httptest.NewRecorder()
@@ -19,7 +21,7 @@ func TestHandlerGET(t *testing.T) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status OK, got %v", resp.StatusCode)
 	}
-	if string(body) != "Response from server" {
+	if string(body) != responseMessage {
 		t.Errorf("Unexpected response body: %q", string(body))
 	}
 }
@@ -36,7 +38,7 @@ func TestHandlerPOST(t *testing.T) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status OK, got %v", resp.StatusCode)
 	}
-	if string(body) != "Response from server" {
+	if string(body) != responseMessage {
 		t.Errorf("Unexpected response body: %q", string(body))
 	}
 }
@@ -49,7 +51,7 @@ func TestSendRequestGET(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}
-	if body != "Response from server" {
+	if body != responseMessage {
 		t.Errorf("Unexpected response body: %q", body)
 	}
 }
@@ -63,7 +65,7 @@ func TestSendRequestPOST(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}
-	if body != "Response from server" {
+	if body != responseMessage {
 		t.Errorf("Unexpected response body: %q", body)
 	}
 }
