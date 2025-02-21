@@ -32,6 +32,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Printf("Request body: %s\n", string(body))
 	}
+	if r.Method != "POST" && r.Method != "GET" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Response from server"))
