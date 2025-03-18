@@ -29,3 +29,5 @@ Thumbs.db
 *.bak
 .go-version
 hw12_log_util/main.old.log
+hw15_go_sql/localdata/
+hw15_go_sql/bin/
